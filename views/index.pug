@@ -1,0 +1,25 @@
+html
+  head
+    style
+        include style.css
+  body
+    h1 Ápp nhà làm
+    form(action="/", method="POST")
+        p(class="add-label") Thêm công việc
+        input(class="add-field", type="text", name="content")
+        button(class="add-btn") Thêm 
+    h2 Các công việc cần làm
+    ul
+        each todo in todos
+            div(class="form-group")
+                li= "Công việc: "+ todo.content + " -> Tình trạng: " + todo.status
+                    br
+                    form(action="/update", method="POST")
+                        //- p(name="ids", value=todo.id)
+                        if todo.status == "Chưa xong"
+                            button(class="update-btn", name="st", value={"st":"Hoàn thành", "id":todo.id}) Hoàn thành
+                        else
+                            button(name="st", value={"st":"Chưa xong", "id":todo.id}) Làm lại
+                    form(action="/delete", method="POST")
+                        button(class="delete-btn",name="id", value=todo.id) Xóa
+    
