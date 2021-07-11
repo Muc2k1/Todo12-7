@@ -61,14 +61,17 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    db.collection("todos").add({
-        content: req.body.content,
-        status: "Chưa xong",
-    }).then(() => {
-        fakeRefreshTL(() => {
-            res.redirect('/')
+    if (req.body.content != "") {
+        db.collection("todos").add({
+            content: req.body.content,
+            status: "Chưa xong",
+        }).then(() => {
+            fakeRefreshTL(() => {
+                res.redirect('/')
+            })
         })
-    })
+    }
+    else res.redirect('/')
 })
 
 app.post('/delete', (req, res) => {
